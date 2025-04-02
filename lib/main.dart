@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/home.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(CrudApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); //most important to connect app to firebase
+  await Firebase.initializeApp();
+  runApp(const MyApp());
 }
 
-class CrudApp extends StatelessWidget {
-  const CrudApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
