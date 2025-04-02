@@ -108,7 +108,7 @@ class _EmployeFormState extends State<EmployeForm> {
                       .addEmployeeDetails(employeeInfo, Id)
                       .then((value) {
                         Fluttertoast.showToast(
-                          msg: "This is Center Short Toast",
+                          msg: "Employee data is added",
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.CENTER,
                           timeInSecForIosWeb: 1,
