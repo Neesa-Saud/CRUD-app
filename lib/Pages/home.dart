@@ -11,6 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController namecontroller = new TextEditingController();
+  TextEditingController agecontroller = new TextEditingController();
+  TextEditingController locationcontroller = new TextEditingController();
   Stream? EmployeeStream;
   getontheload() async {
     EmployeeStream = await DatabaseMethods().getEmployeeDetails();
@@ -43,9 +46,22 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Name:' + ds['Name'],
-                            style: TextStyle(color: Colors.blue),
+                          Row(
+                            children: [
+                              Text(
+                                'Name:' + ds['Name'],
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  namecontroller.text = ds['Name'];
+                                  agecontroller.text = ds['Age'];
+                                  locationcontroller.text = ds['Location'];
+                                  EditEmployeDetail('Id');
+                                },
+                                child: Icon(Icons.edit, color: Colors.orange),
+                              ),
+                            ],
                           ),
                           SizedBox(height: 15),
                           Text(
@@ -105,4 +121,95 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  Future EditEmployeDetail(String id) => showDialog(
+    context: context,
+    builder:
+        (context) => AlertDialog(
+          content: Container(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(Icons.cancel),
+                    ),
+                    Text(
+                      'Edit',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Details',
+                      style: TextStyle(
+                        color: Colors.orange,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  'Name',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextField(
+                    controller: namecontroller,
+                    decoration: InputDecoration(border: InputBorder.none),
+                  ),
+                ),
+                SizedBox(height: 30),
+                Text(
+                  'Age',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextField(
+                    controller: agecontroller,
+                    decoration: InputDecoration(border: InputBorder.none),
+                  ),
+                ),
+                SizedBox(height: 30),
+                Text(
+                  'Location',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextField(
+                    controller: locationcontroller,
+                    decoration: InputDecoration(border: InputBorder.none),
+                  ),
+                ),
+                ElevatedButton(onPressed: () {}, child: Text('Update')),
+              ],
+            ),
+          ),
+        ),
+  );
 }
