@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/employe_form.dart';
@@ -122,7 +124,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future EditEmployeDetail(String id) => showDialog(
+  Future EditEmployeDetail(String Id) => showDialog(
     context: context,
     builder:
         (context) => AlertDialog(
@@ -206,7 +208,23 @@ class _HomePageState extends State<HomePage> {
                     decoration: InputDecoration(border: InputBorder.none),
                   ),
                 ),
-                ElevatedButton(onPressed: () {}, child: Text('Update')),
+                ElevatedButton(
+                  onPressed: () async {
+                    Map<String, dynamic> updateInfo = {
+                      'Name': namecontroller.text,
+                      'Age': agecontroller.text,
+                      'Id': Id,
+                      'Location': locationcontroller.text,
+                    };
+                    await DatabaseMethods()
+                        .updateEmployeDetail(Id, updateInfo)
+                        .then((value) {
+                          // ignore: use_build_context_synchronously
+                          Navigator.pop(context);
+                        });
+                  },
+                  child: Text('Update'),
+                ),
               ],
             ),
           ),
