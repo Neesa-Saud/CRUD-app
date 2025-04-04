@@ -63,7 +63,14 @@ class _HomePageState extends State<HomePage> {
                                 },
                                 child: Icon(Icons.edit, color: Colors.orange),
                               ),
-                              Icon(Icons.delete, color: Colors.red),
+                              GestureDetector(
+                                onTap: () async {
+                                  await DatabaseMethods().deleteEmployeDetail(
+                                    ds['Id'],
+                                  );
+                                },
+                                child: Icon(Icons.delete, color: Colors.red),
+                              ),
                             ],
                           ),
                           SizedBox(height: 15),
