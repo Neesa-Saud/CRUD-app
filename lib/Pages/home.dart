@@ -63,6 +63,7 @@ class _HomePageState extends State<HomePage> {
                                 },
                                 child: Icon(Icons.edit, color: Colors.orange),
                               ),
+                              Icon(Icons.delete, color: Colors.red),
                             ],
                           ),
                           SizedBox(height: 15),
